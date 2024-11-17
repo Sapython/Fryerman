@@ -1,0 +1,74 @@
+<div class="uk-card-body uk-margin-medium uk-card uk-card-default uk-card-hover uk-flex" *ngIf="rspv" style="height: 150px;border-radius: 30px;">
+    <div class="uk-margin-auto uk-width-1-5"><img src="{{description}}" alt="{{name}}" style="height: auto;width: 100px;border-radius: 10px;box-shadow: 5px 5px 20px rgba(1,1,1,0.3);">
+    </div>
+    <div class="uk-margin-auto uk-width-1-5 uk-text-center" style="font-size:large;">{{name}}</div>
+    <div class="uk-padding uk-text-center" style="color: cornflowerblue;">
+        <div *ngIf="isRegular=='true'">
+            <div class="uk-margin-auto uk-width-1-5">{{regPrice}}</div>
+        </div>
+        <div *ngIf="isRegular!='true'">
+            <div class="uk-margin-auto uk-width-1-5">{{lgPrice}}</div>
+        </div>
+    </div>
+
+    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid" *ngIf="hasdifferentSize">
+        <div *ngIf="isRegular=='true'">
+            <select name="type" class="uk-select" id="{{name}}select" (change)="sizeChanged()">
+                <option value="true" selected>Regular</option>
+                <option value="false">Large</option>
+            </select>
+        </div>
+        <div *ngIf="isRegular!='true'">
+            <select name="type" class="uk-select" id="{{name}}select" (change)="sizeChanged()">
+                <option value="false" selected>Large</option>
+                <option value="true">Regular</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="uk-margin-auto uk-width-1-5">
+        <label> Quantity </label>
+        <input type="number" name="quantity" id="{{name}}quantity" (change)="quantityChanged()" class="uk-input" min=1
+            max=100 value="{{quantity}}">
+        <label></label>
+    </div>
+    <button class="uk-button uk-button-secondary uk-margin-auto " style="box-shadow: 5px 5px 20px rgba(1,1,1,0.3);" (click)="checkState()">
+        Remove
+    </button>
+</div>
+<div class="uk-card-body uk-margin-medium uk-card uk-card-default uk-card-hover uk-flex-column" *ngIf="!rspv" style="height: 430px;border-radius: 30px;">
+    <div class="uk-margin-auto uk-width-1-1"><img src="{{description}}" alt="{{name}}" class="uk-margin-auto" style="height: auto;width: 60vw;border-radius: 10px;box-shadow: 5px 5px 20px rgba(1,1,1,0.3);">
+    </div>
+    <div class="uk-margin-auto uk-width-1-1 uk-text-center" style="font-size:large;">{{name}}</div>
+    <div class="uk-text-center" style="color: cornflowerblue;">
+        <div *ngIf="isRegular=='true'">
+            <div class="uk-width-1-1">&#8377;{{regPrice}}</div>
+        </div>
+        <div *ngIf="isRegular!='true'">
+            <div class="uk-width-1-1">&#8377;{{lgPrice}}</div>
+        </div>
+    </div>
+    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid uk-width-1-1" *ngIf="hasdifferentSize">
+        <div *ngIf="isRegular=='true'">
+            <select name="type" class="uk-select uk-width-1-1" id="{{name}}select" (change)="sizeChanged()">
+                <option value="true" selected>Regular</option>
+                <option value="false">Large</option>
+            </select>
+        </div>
+        <div *ngIf="isRegular!='true'">
+            <select name="type" class="uk-select uk-width-1-1" id="{{name}}select" (change)="sizeChanged()">
+                <option value="false" selected>Large</option>
+                <option value="true">Regular</option>
+            </select>
+        </div>
+    </div>
+    <div class="uk-margin-auto uk-width-1-1">
+        <label> Quantity </label>
+        <input type="number" name="quantity" id="{{name}}quantity" (change)="quantityChanged()" class="uk-input" min=1
+            max=100 value="{{quantity}}">
+        <label></label>
+    </div>
+    <button class="uk-button uk-button-secondary uk-margin-auto uk-width-1-1" style="box-shadow: 5px 5px 20px rgba(1,1,1,0.3);border-radius: 10px;" (click)="checkState()">
+        Remove
+    </button>
+</div>

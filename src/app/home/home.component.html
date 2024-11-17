@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fryer Man</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/css/uikit.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontisto@v3.0.4/css/fontisto/fontisto.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/js/uikit-icons.min.js"></script>
+</head>
+
+<body id="main" style="scroll-behavior: smooth;">
+  <div *ngIf="isJustLoggedIn" style="position: fixed;z-index: 20;bottom: 0px;">
+    <div *ngIf="!isLoggedIn">
+      <div
+        style="width: 100vw;height: 60px;background-color: rgb(255, 255, 255);z-index:20;box-shadow: 10px 0px 90px rgb(202, 202, 202);">
+        <p style="position: relative;color:rgb(53, 53, 53);text-align: center;">
+          Please verify your email. If already did please
+          <a href="" style="color: rgb(255, 92, 92);">refresh</a> the page or <a
+            (click)="authService.SendVerificationMail()">resend</a> email.
+        </p>
+      </div>
+    </div>
+  </div>
+  <img src="assets/fryerman-back.png" class="svg">
+  <nav style="margin-top: 10px;z-index: 20;">
+    <ul style="text-align: center;justify-content: center;">
+      <a href=""><img class="logo" src="assets/fryerman-logo-f.png"></a>
+      <div>
+        <li id="navBar navChild"><a href="javascript:void(0)" id="navBar" onclick="openNav()"><i
+              class="fi fi-nav-icon-a" style="color: #ffffff;margin-top: -6px;"></i>&nbsp;</a></li>
+        <li id="navChild cartButton"><a (click)="moveToCart()" class="cartButton" *ngIf="isJustLoggedIn"><i
+              class="fi fi-shopping-basket cartButton" style="color: #ffffff;margin-top: -6px;"><span
+                class="uk-badge">{{cartProducts.length}}</span>
+            </i></a></li>
+        <li class="navChild"><a href="/help" style="color: white;">&nbsp;Help</a></li>
+        <li class="navChild" *ngIf="isJustLoggedIn"><a href="/orders" style="color: white;">&nbsp;Orders <span class="uk-badge">{{liveOrders.length}}</span></a></li>
+        <div *ngIf="isJustLoggedIn">
+          <li class="navChild">
+            <app-profile [name]="name" [image]="image">
+            </app-profile>
+          </li>
+        </div>
+        <li id="navBar navChild"><a href="/login" (click)="authService.SignOut()" style="color: white;"
+            *ngIf="!isJustLoggedIn">Log in</a></li>
+      </div>
+    </ul>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <div *ngIf="isJustLoggedIn" style="position: relative;left:45%;margin-top: 20px;">
+        <app-profile [name]="name" [image]="image">
+        </app-profile>
+      </div>
+      <hr *ngIf="isJustLoggedIn">
+      <a href="/">About</a>
+      <hr>
+      <a href="/help">Help</a>
+      <hr>
+      <div *ngIf="isAdmin">
+        <a href="/admin">Admin</a>
+        <hr>
+      </div>
+      <div *ngIf="isJustLoggedIn">
+        <a href="/orders">Orders</a>
+        <hr>
+        <a href="/login" (click)="authService.SignOut()">Sign Out</a>
+      </div>
+      <div *ngIf="!isJustLoggedIn">
+        <a href="/login" (click)="authService.SignOut()">Log in</a>
+      </div>
+      <br>
+      <hr class="uk-hr">
+    </div>
+  </nav>
+  <!-- <div style="position: absolute;left:50%;transform: translate(-50%);width: 100%;">
+      <h1 class="uk-align-center uk-text-center uk-margin-auto" style="font-size: xx-large;text-align: center;z-index: 200;position: absolute;color: white;">
+        BEST FLAVOURS <br> FRIED EVER <br>
+        <hr class="uk-hr uk-divider-icon">
+      </h1>
+    </div> -->
+  <div class="headerContainer" style="z-index: 100;position: absolute;">
+    <div class="normTitle" id="normTitle">
+      <h2 style="color: white;margin: 0%;">BEST FLAVOURS FRIED EVER <br></h2>
+      <!-- <a href="#vegetarian" uk-scroll><button class="uk-button uk-card-hover buttonOrderRed">See Dishes</button></a> -->
+    </div>
+  </div>
+  <div class="onTopCart uk-animation-slide-right-medium" id="navChild cartButton" *ngIf="cartProducts?.length > 0"><a
+      (click)="moveToCart()" class="cartButton" *ngIf="isJustLoggedIn"><i class="fi fi-shopping-basket cartButton"
+        style="color: #ffffff;margin-top: -6px;">&nbsp;Cart&nbsp;<span class="uk-badge">{{cartProducts.length}}</span>
+      </i></a></div>
+  <div class="mainBodyContainer">
+    <div>
+      <div class="cartContainer">
+        <div class="cartHeader">
+          <p class="cardTitle uk-text-center uk-text-bold">Your Cart</p>
+        </div>
+        <div class="productMainContainer">
+          <div class="productsContainer" *ngIf="productsAvailable">
+            <div *ngFor="let cartProduct of cartProducts">
+              <div class="uk-card" style="padding: 10px 10px;border-bottom: #b8b8b8 2px solid;"
+                id="{{cartProduct.name}}">
+                <button style="border: none;margin: 0px;background-color: transparent;"
+                  (click)="removeItem(cartProduct.name)" uk-close></button>
+                <div class="uk-flex">
+                  <img src="{{cartProduct.image}}" style="border-radius: 20px;" height="100" width="100"
+                    alt="{{cartProduct.name}}">
+                  <h4 style="color: #313137;margin: 10px 10px;">{{cartProduct.name}}</h4>
+                  <h5>{{cartProduct.regPrice}}/{{cartProduct.lgPrice}}</h5>
+                </div>
+                <div class="uk-flex uk-margin">
+                  <div style="width:50%;">
+                    <input type="number" id="{{cartProduct.name}}quantity" min="1" max="100"
+                      name="{{cartProduct.name}}quantity" (change)="setNewQuantity(cartProduct.name)"
+                      value="{{cartProduct.quantity}}" class="uk-input">
+                  </div>
+                  <div style="width:50%;" *ngIf="cartProduct.hasDifferentSize">
+                    <select name="type" class="uk-select" [value]="cartProduct.isregular"
+                      id="{{cartProduct.name}}select" (change)="sizeChanged(cartProduct.name)">
+                      <option value="true" selected>Regular</option>
+                      <option value="false">Large</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="noProductContainer" *ngIf="!productsAvailable">
+            <i class="fi fi-opencart" style="font-size: 60px;margin-top: 20px;"></i>
+            <p class="uk-text-center" style="color: #313137;">The cart is empty please add some products</p>
+          </div>
+          <div style="position: absolute;bottom: 0px;height:40px;width:100%;">
+            <button class="uk-button uk-button-secondary uk-text-center uk-width-1-1"
+              style=" border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
+              <a (click)="moveToCheckout()" style="text-decoration: none;color: aliceblue;">Move to Checkout</a>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h2 class="menu"><u>MENU</u></h2>
+    <section style="margin-left: 20px;" id="vegetarian">
+      <h2 style="color: white;">Vegetarian Food</h2>
+      <section id="vegs">
+        <div class="products" style="margin-right:10px;">
+          <div *ngIf="vegProductsKeys!=[]">
+            <div class="uk-flex-around uk-flex-inline">
+              <div *ngFor="let item of vegProductsKeys" style="margin-left: 20px;">
+                <product id="vegItem" [image]="vegProducts[item].ProductImage" [title]="vegProducts[item].ProductName"
+                  [regPrice]="vegProducts[item].ProductRegularRate" [lgPrice]="vegProducts[item].ProductLargeRate"
+                  [function]="updateCart" [cartProducts]="cartProducts" [productsAvailable]="productsAvailable"
+                  [checkCartState]="checkCartState" [isLoggedIn]="isJustLoggedIn"
+                  [description]="vegProducts[item].discription">
+                </product>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!vegProductsKeys">
+            <i class="fi fi-spinner fi-spin fi-pulse" style="color: #ffffff;"></i>
+          </div>
+        </div>
+      </section>
+      <hr class="uk-divider-icon">
+      <section style="margin-left: 0px;" id="nonVegetarian">
+        <h2 style="color: white;">Non-Vegetarian Food</h2>
+        <div style="padding: 3px 3px;">
+          <section class="products">
+            <div *ngIf="nonVegProductsKeys!=[]">
+              <div class="uk-flex-around uk-flex-inline" style="margin-left: 20px;padding: 3px 3px;">
+                <div *ngFor="let item of nonVegProductsKeys">
+                  <product image="{{nonVegProducts[item].ProductImage}}" title="{{nonVegProducts[item].ProductName}}"
+                    [regPrice]="nonVegProducts[item].ProductRegularRate"
+                    [lgPrice]="nonVegProducts[item].ProductLargeRate" [function]="updateCart"
+                    [cartProducts]="cartProducts" [productsAvailable]="productsAvailable"
+                    [checkCartState]="checkCartState" [isLoggedIn]="isJustLoggedIn"
+                    [description]="nonVegProducts[item].discription">
+                  </product>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!nonVegProductsKeys">
+              <i class="fi fi-spinner fi-spin fi-pulse" style="color: #ffffff;"></i>
+            </div>
+          </section>
+        </div>
+      </section>
+      <hr class="uk-divider-icon">
+      <section style="margin-left: 0px;" id="Drinks">
+        <h2 style="color: white;">Drinks</h2>
+        <div style="padding: 3px 3px;">
+          <section class="products">
+            <div *ngIf="DrinksKeys!=[]">
+              <div class="uk-flex-around uk-flex-inline" style="margin-left: 20px;padding: 3px 3px;">
+                <div *ngFor="let item of DrinksKeys">
+                  <product image="{{Drinks[item].ProductImage}}" title="{{Drinks[item].ProductName}}"
+                    [regPrice]="Drinks[item].ProductRegularRate" [lgPrice]="Drinks[item].ProductLargeRate"
+                    [function]="updateCart" [cartProducts]="cartProducts" [productsAvailable]="productsAvailable"
+                    [checkCartState]="checkCartState" [isLoggedIn]="isJustLoggedIn"
+                    [description]="Drinks[item].discription" [differentSize]='false'>
+                  </product>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!DrinksKeys">
+              <i class="fi fi-spinner fi-spin fi-pulse" style="color: #ffffff;"></i>
+            </div>
+          </section>
+        </div>
+      </section>
+    </section>
+    <hr class="uk-divider-icon">
+  </div>
+  <div class="footer" id="footer">
+    <div style="float: left;">
+      <div class="uk-flex">
+        <div>
+          <a href="/help">
+            <img src="assets/fryerman-logo-f.png" alt="" style="margin-top: 80px;margin-left: 30px;">
+            <h3 style="margin-top: 20px; margin-left: 65px;">Contact Us</h3>
+          </a>
+          <br>
+        </div>
+        <div class="legals">
+          <a href="/terms" style="color: white;text-decoration: none;font-size: large;">Terms And
+            Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="/privacy" style="color: white;text-decoration: none;font-size: large;">Privacy
+            Policy</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="/disclaimer"
+            style="color: white;text-decoration: none;font-size: large;">Disclaimer</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="/help" style="color: white;text-decoration: none;font-size: large;">Help</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+    <div style="float: right;margin-right: 65px;margin-top: 170px;padding:30px 30px;" class="uk-grid-row-medium">
+      <li style="font-size: x-large;" class="fi fi-twitter"></li>
+      <li style="font-size: x-large;" class="fi fi-facebook"></li>
+      <li style="font-size: x-large;" class="fi fi-whatsapp"></li>
+    </div>
+  </div>
+  <div class="deepFooter" style="margin: 0px 0px;  position: absolute;color: white; width: 100vw;text-align: center;overflow-x: hidden;;overflow-x: hidden;">
+    <div style="background-color: #811919;margin: 0px 0px;text-align: center;">
+      All rights reserved. Copyright &#169; | NISHKARSH FOODS AND NOURISHMENTS PVT.LTD
+    </div>
+    <div style="width:100vw;margin:0px 0px;background-color: rgb(29, 29, 29); padding: 10px 0px;text-align: center;">Made By
+      &nbsp;&nbsp;<a href="https://swayambhu.tech"><img
+          src="https://swayambhu.tech/assets/img/INNOVATIONS 180.png?h=5711e5e479de8a4d97718000ba5149a8" width="25"
+          height="25" alt="Swayambhu" style="border-radius: 25px;object-fit: contain;"> Swayambhu </a> with &nbsp;&nbsp;<a href="https://sapython.me/"><img
+          src="https://sapython.me/favicon.ico" height="25" width="25" alt="Sapython"> Kumar Saptam</a></div>
+  </div>
+</body>
+
+</html>

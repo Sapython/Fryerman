@@ -1,0 +1,99 @@
+<div class="uk-card uk-card-hover uk-card-default uk-card-body" id="orderContainer" style="width:calc(100vw/4);" *ngIf="rspv">
+    <p style="font-size: x-large;">{{title}}</p>
+    <div class="">
+        <div style="overflow-y: scroll;" class="uk-card uk-card-default agm-map">
+            <table class="uk-table uk-table-striped">
+                <tr *ngFor="let product of products">
+                    <td>
+                        {{product.name}}
+                    </td>
+                    
+                    <td>
+                        <div *ngIf="product.isregular">{{product.regPrice}}</div>
+                        <div *ngIf="!product.isregular">{{product.lgPrice}}</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <p style="font-size:large;">&#8377;{{price}} Only</p>
+    <hr class="uk-hr">
+    <div class="uk-column">
+        <div style="width: 100%;height: 100px;background-image:url({{image}});background-position: center;background-repeat: no-repeat;">
+        </div>
+        <div>
+            <p style="font-size:large;color: cornflowerblue;">Status: Your order is {{status}}</p>
+            <p style="color: cornflowerblue;">It will take about <strong>{{time}}</strong> to reach at your door-step.</p>
+            <p style="font-size:x-large;">Your OTP</p>
+            <p style="font-size: large;">{{currentOtp}}</p>
+        </div>
+        <p *ngIf="comparer>0">You have&nbsp;&nbsp;&nbsp;&nbsp;<i style="color: darkorange;">{{remainingTime}}</i>&nbsp;&nbsp;&nbsp;&nbsp;left. After that you cannot cancel order.</p>
+        <p *ngIf="comparer<0">Cacellation time expired now you cannot cancel the order.</p>
+    </div>
+    <div class="uk-button-group">
+        <button class="uk-button uk-button-secondary" uk-toggle="target: #modal-example">Know More</button>
+        <button class="uk-button uk-button-danger" *ngIf="comparer>0" uk-toggle="target: #cancelModal">Cancel Order</button>
+    </div>
+
+</div>
+<div class="uk-card uk-card-hover uk-card-default uk-card-body" id="orderContainer" style="width:100%" *ngIf="!rspv">
+    <p style="font-size: x-large;">{{title}}</p>
+    <div class="">
+        <div style="overflow-y: scroll;" class="uk-card uk-card-default agm-map">
+            <table class="uk-table uk-table-striped">
+                <tr *ngFor="let product of products">
+                    <td>
+                        {{product.name}}
+                    </td>
+                    
+                    <td>
+                        <div *ngIf="product.isregular">{{product.regPrice}}</div>
+                        <div *ngIf="!product.isregular">{{product.lgPrice}}</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <p style="font-size:large;">&#8377;{{price}} Only</p>
+    <hr class="uk-hr">
+    <div class="uk-column">
+        <div style="width: 100%;height: 100px;background-image:url({{image}});background-position: center;background-repeat: no-repeat;">
+        </div>
+        <div>
+            <p style="font-size:large;color: cornflowerblue;">Status: Your order is {{status}}</p>
+            <p style="color: cornflowerblue;">It will take about <strong>{{time}}</strong> to reach at your door-step.</p>
+            <p style="font-size:x-large;">Your OTP</p>
+            <p style="font-size: large;">{{currentOtp}}</p>
+        </div>
+        <p *ngIf="comparer>0">You have&nbsp;&nbsp;&nbsp;&nbsp;<i style="color: darkorange;">{{remainingTime}}</i>&nbsp;&nbsp;&nbsp;&nbsp;left. After that you cannot cancel order.</p>
+        <p *ngIf="comparer<0">Cancellation time expired now you cannot cancel the order.</p>
+    </div>
+    <div class="uk-button-group">
+        <button class="uk-button uk-button-secondary" uk-toggle="target: #modal-example">Know More</button>
+        <button class="uk-button uk-button-danger" *ngIf="comparer>0" uk-toggle="target: #cancelModal">Cancel Order</button>
+    </div>
+
+</div>
+<div id="modal-example" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">About your order</h2>
+        <p>For any concerns and inquiry for your orders delivery and cancellation ,please contact us.</p>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Close</button>
+            <button class="uk-button uk-button-primary" type="button">
+                <a href="/help" style="text-decoration: none;color: white;">Contact Us</a>
+            </button>
+        </p>
+    </div>
+</div>
+<div id="cancelModal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Please state a reason</h2>
+        <p>Can you please provide a reason for cancellation of order.</p>
+        <textarea name="cancelArea" id="cancelArea" cols="30" rows="10" class="uk-width-1-1" placeholder="Your Reason"></textarea>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            <button class="uk-button uk-button-primary uk-modal-close" type="button" (click)="cancelOrder()">Submit</button>
+        </p>
+    </div>
+</div>

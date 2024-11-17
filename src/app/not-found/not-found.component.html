@@ -1,0 +1,147 @@
+<style>
+    @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+
+  .page_404 {
+    padding: 40px 0;
+    background: #fff;
+    font-family: "Arvo", serif;
+  }
+
+  .page_404 img {
+    width: 100%;
+  }
+
+  .four_zero_four_bg {
+    background-image: url("https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif");
+    height: 40vh;
+    width: 100vw;
+    margin-bottom: 10vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  @keyframes glitchEffect {
+    50% {
+      color: rgb(255, 72, 72);
+    }
+    100% {
+      color: rgb(106, 89, 255);
+    }
+  }
+  .text-center_404 {
+    font-size: 13vw;
+    animation: glitchEffect 2s alternate infinite;
+    font-family: "DotGothic16", sans-serif;
+    text-align: center;
+  }
+  .h2 {
+    font-size: 8vw;
+    font-family: "DotGothic16", sans-serif;
+    text-align: center;
+  }
+  .four_zero_four_bg h3 {
+    font-size: 80px;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .link_404 {
+    color: #fff !important;
+    padding: 10px 20px;
+    background: #39ac31;
+    margin: 20px 0;
+    display: inline-block;
+  }
+  .contant_box_404 {
+    margin-top: -50px;
+  }
+  .child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .button {
+    padding: 10px 10px;
+    width:40vw;
+    height: fit-content;
+    background: #f3f0f1;
+    position: relative;
+    background: #f3f0f1;
+    /* margin-bottom: 25px; */
+    border-radius: 32px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.1s ease-in-out;
+    box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.5),
+      inset 8px 8px 16px rgba(0, 0, 0, 0.1);
+    color: #79e3b6;
+  }
+  .button:hover {
+    opacity: 1;
+    box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8),
+      6px 6px 10px rgba(0, 0, 0, 0.2);
+  }
+  span {
+    line-height: 5vh;
+    font-family: "Montserrat", sans-serif;
+    font-size:  2vh;
+    font-weight: semibold;
+  }
+  @media only screen and (min-width: 600px){
+      .text-center_404{
+          font-size:4vw;
+      }
+      .four_zero_four_bg{
+          width: 40vw;
+          height: 40vh;
+      }
+      .h2{
+          font-size: 3vw;
+      }
+      .button{
+          width: 10vw;
+          height: 5vh;
+      }
+  }
+</style>
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>404</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section class="page_404">
+      <div class="container child">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1 class="text-center_404">404</h1>
+            <div class="col-sm-10 col-sm-offset-1 text-center">
+              <div class="four_zero_four_bg"></div>
+              <div class="contant_box_404">
+                <h3 class="h2">Looks Like You're Lost</h3>
+                <a href="" style="text-decoration: none;"><div class="button child"><span>Go to Home</span></div></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="" async defer></script>
+  </body>
+</html>

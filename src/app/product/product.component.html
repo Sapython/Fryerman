@@ -1,0 +1,39 @@
+
+<div class="uk-card uk-card-default uk-card-hover productSize tooltip" style="margin-right: 10px;display:inline-block;">
+    <div class="tooltip" *ngIf="showTooltip">
+        <span class="tooltiptext">{{description}}</span>
+    </div>
+    <img src={{image}} height="150"  width="150" style="border-radius: 20px;">
+    <h3 class="uk-text-center">{{title}}</h3>
+    <div *ngIf="differentSize">
+        <p>Only <i style="color: green;">{{regPrice}}</i> / <i style="color: cornflowerblue;">{{lgPrice}}</i></p>
+    </div> 
+    <div *ngIf="!differentSize">
+        <p>Only <i style="color: rgb(194, 137, 14);">{{regPrice}}</i></p>
+    </div>
+    <div *ngIf="isLoggedIn">
+        <button class="uk-button" type="button" id="addTc" (click)="updateCart()">Add To Cart</button>
+    </div>
+    <div *ngIf="!isLoggedIn">
+        <button class="uk-button" type="button" id="addTc" uk-toggle="target: #notLoggedIn">Add To Cart</button>
+    </div>
+    <div id="notLoggedIn" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+            <button class="uk-button uk-modal-close" uk-close></button>
+            <h2 class="uk-modal-title">Authentication Problem</h2>
+            <p>You are not logged please log in to continue</p>
+            <p class="uk-text-right">
+                <a href="/login" style="text-decoration: none;">
+                    <button class="uk-button uk-button-default" type="button">
+                        Login
+                    </button>
+                </a>
+                <a href="/register" style="text-decoration: none;color: white;">
+                    <button class="uk-button uk-button-primary" type="button">
+                        Sign-Up
+                    </button>
+                </a>
+            </p>
+        </div>
+    </div>
+</div>

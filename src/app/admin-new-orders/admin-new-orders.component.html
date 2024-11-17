@@ -1,0 +1,67 @@
+<div class="uk-flex uk-card-body uk-card-hover uk-card-default" style="height: 200px; margin-bottom: 30px;">
+    <div class="uk-card uk-card-default">
+        <agm-map [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="17">
+            <agm-marker 
+            *ngFor="let marker of location.markers"
+            [latitude]="marker.lat" 
+            [longitude]="marker.lng">
+            </agm-marker>
+        </agm-map>
+    </div>
+    <div class="uk-card uk-card-body ">
+        <Address>
+            <i class="fi fi-map" style="color: rgb(255, 0, 106);"></i>&nbsp;&nbsp;{{address}}
+        </Address>
+        <div class="uk-margin-auto">
+            <button class="uk-button uk-button-danger uk-button" uk-toggle="target: #confirmModal">Complete Order</button>
+            <button class="uk-button uk-button-secondary uk-button" uk-toggle="target: #cancelModal">Cancel Order</button>
+        </div>
+        <div class="uk-margin">
+            Total Cost <strong style="color: rgb(49, 179, 49);">{{price}}</strong>&nbsp;|&nbsp;
+            Ordered By <i style="color: cornflowerblue;">{{personName}}</i>
+        </div>
+    </div>
+    <div style="overflow-y: auto;" class="uk-card uk-card-body uk-card-default">
+        <table class="uk-table uk-table-hover uk-table-striped">
+            <tr>
+                <th><strong> Product Name </strong></th>
+                <th><strong> Product Quantity </strong></th>
+                <th><strong> Product Price </strong></th>
+            </tr>
+            <tr *ngFor="let product of products">
+                <td>
+                    {{product.name}}
+                </td>
+                <td>
+                    {{product.quantity}}
+                </td>
+                <td>
+                    <div *ngIf="product.isregular">{{product.regPrice}}</div>
+                    <div *ngIf="!product.isregular">{{product.lgPrice}}</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="cancelModal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Please state a reason</h2>
+        <p>Can you please provide a reason for cancellation of order.</p>
+        <textarea name="cancelArea" id="cancelArea" cols="30" rows="10" class="uk-width-1-1" required placeholder="Your Reason"></textarea>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            <button class="uk-button uk-button-primary uk-modal-close" type="button" (click)="cancelOrder()">Submit</button>
+        </p>
+    </div>
+</div>
+<div id="confirmModal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Complete Order</h2>
+        <p>Provide the OTP for order. </p>
+        <input type="text" class="uk-input" name="otp" id="otp" required #otp>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            <button class="uk-button uk-button-primary uk-modal-close" type="button" (click)="completeOrder(otp.value)">Submit</button>
+        </p>
+    </div>
+</div>

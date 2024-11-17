@@ -1,0 +1,33 @@
+body{
+    background-image: url("/../assets/darkForest.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* filter: blur(8px);
+    -webkit-filter: blur(8px); */
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+}
+.card{
+    width: 33%;
+}
+.button{
+    position: relative;
+    left: 50%;
+    top:40%;
+    transform: translate(-50%,-50%);
+}
+@media screen  and (max-Width:850px){
+    .card{
+        width: 70%;
+    }
+}
+@media screen  and (max-Width:850px){
+    .card{
+        width: 80%;
+    }
+    .button{
+        top: 20%;
+    }
+}

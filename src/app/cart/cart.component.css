@@ -1,0 +1,358 @@
+html,
+body {
+  overflow-x: hidden;
+  transition: background-color 0.5s;
+}
+#Ellipse_1 {
+  fill: rgba(207, 25, 29, 1);
+}
+.Ellipse_1 {
+  position: absolute;
+  overflow: visible;
+  width: 1055px;
+  height: 1055px;
+  left: -201px;
+  top: -273px;
+}
+
+ul {
+  position: relative;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: transparent;
+  z-index: 2;
+}
+
+li {
+  float: right;
+}
+
+.logo {
+  margin-top: 10px;
+  margin-left: 10px;
+  float: left;
+}
+
+li a,
+i {
+  font-weight: 600;
+  font-size: 20px;
+  display: block;
+  color: rgb(49, 49, 49);
+  text-align: center;
+  padding: 14px 16px;
+}
+li,
+i {
+  text-decoration: none;
+}
+.footer{
+  position: static;
+  width: 100vw;
+  height: 250px;
+  background-color: #a81818;
+  color: white;
+  padding: 10px 10px;
+}
+.footer p,li,h3 {
+  color:white;
+  margin-left: 20px;
+}
+.footer li{
+  font-size: xx-large;
+}
+.footer li:hover{
+  text-shadow: rgb(41, 41, 41) 5px 5px 20px;
+}
+/* sidebar css */
+.sidenav {
+  will-change: transform;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  right: 0;
+  box-shadow: -10px 0px 20px rgba(0, 0, 0,0.2);
+  background-color: #ffffff;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: rgb(105, 105, 105);
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #ff5858;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-right: 50px;
+}
+
+#main {
+  transition: margin-right 0.5s;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+.active {
+  border-bottom: rgba(207, 25, 29, 1) solid 5px;
+}
+/* sidebar css ends */
+.products::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.products {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.products {
+  overflow-y: hidden;
+  width: 100vw;
+  overflow-x: scroll;
+  width: 71vw;
+  margin-right: 50px;
+}
+.products {
+  scroll-snap-type: x proximity;
+}
+/* buttons */
+.buttonOrderRed {
+  color: #ffffff;
+  background-color: rgba(207, 25, 29, 1);
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.buttonOrderRed:hover {
+  background-color: #ffffff;
+  border-color: rgba(207, 25, 29, 1);
+  border-width: 5px;
+  color: rgba(207, 25, 29, 1);
+}
+/* buttons end */
+
+.cartContainer {
+  position: fixed;
+  top: 180px;
+  right: 20px;
+  width: 300px;
+  height: 400px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 10px 10px 20px #888888;
+  z-index: 10;
+}
+.cartHeader {
+  position: relative;
+  top: 0px;
+  width: 300px;
+  height: 60px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: rgba(207, 25, 29, 1);
+  box-shadow: 0px 10px 20px rgba(207, 25, 29, 0.5);
+}
+.cardTitle {
+  color: white;
+  font-size: 20px;
+}
+/* custom grid */
+.customGrid {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 10px;
+  grid-template-rows: minmax(150px, 1fr);
+  grid-auto-flow: column;
+  overflow-x: scroll;
+  scroll-snap-type: x proximity;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+/* custom grid ends */
+
+.hrCenter {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+[_nghost-ufl-c15]
+  .carousel-dots[_ngcontent-ufl-c15]
+  .carousel-dot[_ngcontent-ufl-c15] {
+  border: 2px solid #3c3c3c;
+  border-radius: 100px;
+  display: inline-block;
+  height: 8px;
+  margin: 4px;
+  width: 8px;
+}
+.productsContainer {
+  overflow-y: scroll;
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+.productsContainer::-webkit-scrollbar {
+  display: none;
+}
+/* .productsContainer {
+    -ms-overflow-style: none;
+    scrollbar-width: none;  
+  } */
+.headerContainer {
+  margin-left: 30px;
+  margin-top: 25px;
+}
+.carouselContainer {
+  width: 600px;
+  display: inline-block;
+}
+.normTitle {
+  float: right;
+  margin-top: 7%;
+  margin-right: 25%;
+  width: 20%;
+}
+.navChild {
+  margin-right: 50px;
+}
+.carouselImage {
+  width: 600px;
+  height: 600px;
+}
+.mainCarousel {
+  width: 600px;
+  height: 600px;
+}
+.mainBodyContainer {
+  overflow-x: hidden;
+  width: 100vw;
+  z-index: 5;
+  position: absolute;
+  color: white;
+  /* top:0px; */
+  left: 0px;
+}
+.footerSmall {
+  background-color: #a81818;
+  position: relative;
+  display: none;
+  color: white;
+}
+.cartButton {
+  display: none !important;
+}
+.smallCart{
+  min-height: 75vh;
+}
+@media only screen and  (min-width: 300px) {
+  .cartButton {
+    display: block !important;
+  }
+  .logo{
+    margin-right: 0px;
+    width: 100px;
+    height: auto;
+  }
+  body {
+    height: 100%;
+    overflow-x: hidden;
+    width: 100vw;
+  }
+  .cartContainer {
+    display: none;
+  }
+  svg {
+    display: none;
+  }
+  .headerContainer {
+    width: 100vw;
+    margin-top: 0px;
+    margin-left: 0px;
+    z-index: 1;
+    margin: 0 auto;
+  }
+  .carouselContainer {
+    margin: 0%;
+  }
+  .normTitle {
+    text-align: center;
+    width: 80vw;
+    float: none;
+    margin: 0 auto;
+    position: relative;
+  }
+  .products {
+    width: 90vw;
+    margin-right: 40px;
+  }
+  .footer {
+    display: none;
+  }
+  .navChild {
+    display: none;
+    margin-right: 20px;
+  }
+  .footerSmall {
+    background-color: #a81818;
+    position: absolute;
+    display: block;
+    margin-top: -200px;
+    color: white;
+  }
+}
+@media only screen and (max-width: 850px) {
+  .cartButton {
+    display: block;
+  }
+  .cartContainer {
+    display: none;
+  }
+  svg {
+    display: none;
+  }
+  .headerContainer {
+    width: 100vw;
+    margin-top: 0px;
+    z-index: 1;
+  }
+  .normTitle {
+    text-align: center;
+    width: 80vw;
+    float: none;
+    margin-bottom: 50px;
+    position: relative;
+  }
+  .products {
+    width: 90vw;
+    margin-right: 40px;
+  }
+  .footer {
+    position: static;
+  }
+  .navChild {
+    margin-right: 20px;
+  }
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/css/uikit.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontisto@v3.0.4/css/fontisto/fontisto.min.css" />
+  <!-- UIkit JS -->
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/js/uikit-icons.min.js"></script>
+
+</head>
+
+<body>
+  <nav style="margin-top: 10px;">
+    <ul style="text-align: center;justify-content: center;">
+      <a href=""><img class="logo" src="assets/fryerman-logo-f.png"></a>
+      <div>
+        <li class="navChild"><a href="javascript:void(0)" id="navBar" onclick="openNav()"><i class="fi fi-nav-icon-a"
+              style="color: #313137;margin-top: -6px;"></i>&nbsp;</a></li>
+        <li class="navChild"><a href="/help">&nbsp;Help</a></li>
+        <li class="navChild"><a href="/orders">&nbsp;Orders</a></li>
+        <li class="navChild"><a href="/">&nbsp;Home</a></li>
+        <div *ngIf="isJustLoggedIn">
+          <li class="navChild">
+              <app-profile [name]="name" [image]="image">
+              </app-profile>
+            </li>
+        </div>
+      </div>
+    </ul>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="/">About</a>
+      <hr>
+      <a href="/help">Help</a>
+      <hr>
+      <div *ngIf="isJustLoggedIn">
+        <a href="/orders">Orders</a>
+        <hr>
+        <a href="/login" (click)="authService.SignOut()">Sign Out</a>
+      </div>
+      <div *ngIf="!isJustLoggedIn">
+        <hr>
+        <a href="/login" (click)="authService.SignOut()">Log in</a>
+      </div>
+      <br>
+      <hr class="uk-hr">
+    </div>
+  </nav>
+  <div class="uk-flex uk-flex-column uk-width-1-1" style="padding: 10px 10px;" *ngIf="isOrderAvailable">
+    <div *ngIf="isLiveOrderAvailable">
+      <h1 style="margin-left: 60px;" id="liveOrders">Your Orders</h1>
+      <a href="#history" style="margin-left: 60px;" *ngIf="liveOrders==[]" uk-scroll><button class="uk-button uk-button-secondary">Scroll to old orders</button></a>
+      <div class="uk-grid uk-margin-medium-bottom" uk-grid>
+        <div *ngFor="let order of liveOrders" style="margin: none;">
+          <app-live-order
+          [title]="order.products[0].name"
+          [price]="order.totalPrice"
+          [image]="order.products[0].image"
+          [status]="'cooking'"
+          [time]="'20 minutes'"
+          [date]="order.orderDate"
+          [currentOtp]="order.otp"
+          [products]="order.products"
+          [longitude]="order.location.longitude"
+          [latitude]="order.location.latitude"
+          [rspv]="rspv"
+          [userId]="order.userId"
+          >
+          </app-live-order>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isOldOrdersAvailable">
+      <h1 style="margin-left: 60px;" id="history">Your History</h1>
+      <a href="#liveOrders" style="margin-left: 60px;width: fit-content;" uk-scroll><button class="uk-button uk-button-secondary" >Scroll To live orders</button></a>
+      <div class="uk-flex uk-flex-column uk-width-1-1" style="padding: 10px 10px;">
+        <div *ngFor="let historyData of oldOrders">
+          <app-history-card
+          [items]="historyData.products"
+          [totalPrice]="historyData.totalPrice"
+          [isCancelled]="historyData.isCancelled"
+          [reason]="historyData.cancelReason"
+          [rspv]="rspv"
+          >
+        </app-history-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!isOrderAvailable" style="min-height: 80vh;">
+    <div style="width: 100%;height: 100%;position: relative;">
+      <div class="noresultBG">
+        <hr class="uk-hr uk-divider-icon">
+        <p style="font-size: 2vh;color:rgba(137, 64, 255,1);text-align: center;text-shadow: 40px 10px 2px rgba(137, 64, 255,0.3)"><b style="font-size: 5vh;color: rgb(219, 48, 105);text-shadow: 40px 10px 2px rgba(219, 48, 105,0.3);">No orders!</b><br>Order something and it will show up magically here.</p>
+        <hr class="uk-hr uk-divider-icon">
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div style="float: left;">
+      <div class="uk-flex" style="margin: 0%; padding: 0%; margin-bottom: 0px;">
+        <div>
+          <a href="/help">
+            <img src="assets/fryerman-logo-f.png" alt="" style="margin-top: 80px;margin-left: 30px;">
+            <h3 style="margin-top: 20px; margin-left: 65px;">Contact Us</h3>
+          </a>
+          <br>
+        </div>
+        <div class="legals">
+          <a href="/terms" style="color: white;text-decoration: none;font-size: large;">Terms And Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="/privacy" style="color: white;text-decoration: none;font-size: large;">Privacy Policy</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="/disclaimer" style="color: white;text-decoration: none;font-size: large;">Disclaimer</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="/help" style="color: white;text-decoration: none;font-size: large;">Help</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+    <div style="float: right;margin-right: 65px;margin-top: 170px;padding:30px 30px;" class="uk-grid-row-medium" >
+      <li style="font-size: x-large;" class="fi fi-twitter"></li>
+      <li style="font-size: x-large;" class="fi fi-facebook"></li>
+      <li style="font-size: x-large;" class="fi fi-whatsapp"></li>
+    </div>
+  </div>
+  <div class="deepFooter" style="margin: 0px 0px;  position: absolute;color: white; width: 100vw;text-align: center;overflow-x: hidden;;" >
+    <div style="background-color: #811919;margin: 0px 0px;text-align: center;">
+      All rights reserved. Copyright &#169; | NISHKARSH FOODS AND NOURISHMENTS PVT.LTD
+    </div>
+    <div style="width:100vw;margin:0px 0px;background-color: rgb(29, 29, 29); padding: 10px 10px;">Developed By <br>&nbsp;&nbsp;&nbsp;<a href="https://swayambhu.tech"><img src="https://swayambhu.tech/assets/img/INNOVATIONS 180.png?h=5711e5e479de8a4d97718000ba5149a8" width="25" height="25" alt="Swayambhu"> Swayambhu </a> with &nbsp;&nbsp;&nbsp;<a href="https://sapython.me/"><img src="https://sapython.me/favicon.ico" height="25" width="25" alt="Sapython"> Kumar Saptam</a></div>
+  </div>
+</body>
+</html>

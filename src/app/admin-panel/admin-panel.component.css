@@ -1,0 +1,130 @@
+html,body{
+  overflow-x:hidden;
+  transition: background-color .5s;
+}
+#Ellipse_1 {
+  fill: rgba(207,25,29,1);
+}
+.Ellipse_1 {
+  position: absolute;
+  overflow: visible;
+  width: 1055px;
+  height: 1055px;
+  left: -201px;
+  top: -273px;
+}
+
+ul {
+  position: relative;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: transparent;
+    z-index: 2;
+}
+
+li {
+  float: right;
+}
+
+.logo{
+    float: left;
+}
+
+li a,i {
+  font-weight: 600;
+  font-size: 20px;
+  display: block;
+  color: rgb(49, 49, 49);
+  text-align: center;
+  padding: 14px 16px;
+}
+li,i{
+  text-decoration: none;
+}
+.footer{
+  position: relative;
+  bottom: 0px;
+  width: 100vw;
+  height: 250px;
+  background-color: #a81818;
+  color: white;
+  padding: 10px 10px;
+}
+.footer p,li,h3 {
+  color:white;
+  margin-left: 20px;
+}
+.footer li{
+  font-size: xx-large;
+}
+.footer li:hover{
+  text-shadow: rgb(41, 41, 41) 5px 5px 20px;
+}
+/* sidebar css */
+.sidenav {
+  will-change: transform;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  right: 0;
+  box-shadow: -10px 0px 20px rgba(0, 0, 0,0.2);
+  background-color: #ffffff;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: rgb(105, 105, 105);
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #ff5858;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-right: 50px;
+}
+
+.legals{
+  position: relative;
+  margin-top: 70px;
+  margin-left: 40px;
+}
+
+#main {
+  transition: margin-right .5s;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+.active{
+  border-bottom: rgba(207,25,29,1) solid 5px;
+}
+/* sidebar css ends */
+.hrCenter{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+.cardTitle{
+    color: #747474;
+}
+.mainContent{
+    color: #ff5858;
+}

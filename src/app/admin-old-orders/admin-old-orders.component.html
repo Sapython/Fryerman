@@ -1,0 +1,91 @@
+<div class="uk-flex uk-card-body uk-card-hover uk-card-default" style="height: 200px; margin-bottom: 30px;background-color: rgba(52, 255, 52, 0.068);" *ngIf="!isCancelled">
+    <div class="uk-card uk-card-default">
+        <agm-map [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="17">
+            <agm-marker 
+            *ngFor="let marker of location.markers"
+            [latitude]="marker.lat" 
+            [longitude]="marker.lng">
+            </agm-marker>
+        </agm-map>
+    </div>
+    <div class="uk-card uk-card-body ">
+        <Address>
+            <i class="fi fi-map" style="color: rgb(255, 0, 106);"></i>&nbsp;&nbsp;{{address}}
+        </Address>
+        <div class="uk-margin">
+            Total Cost <strong style="color: rgb(49, 179, 49);">{{price}}</strong>&nbsp;|&nbsp;
+            Ordered By <i style="color: cornflowerblue;">{{personName}}</i>
+        </div>
+        <div class="uk-margin">
+            Delivered By <i style="color: cornflowerblue;">{{personName}}</i>
+        </div>
+    </div>
+    <div style="overflow-y: auto;" class="uk-card uk-card-body uk-card-default">
+        <table class="uk-table uk-table-hover uk-table-striped">
+            <tr>
+                <th><strong> Product Name </strong></th>
+                <th><strong> Product Quantity </strong></th>
+                <th><strong> Product Price </strong></th>
+            </tr>
+            <tr *ngFor="let product of products">
+                <td>
+                    {{product.name}}
+                </td>
+                <td>
+                    {{product.quantity}}
+                </td>
+                <td>
+                    <div *ngIf="product.isregular">{{product.regPrice}}</div>
+                    <div *ngIf="!product.isregular">{{product.lgPrice}}</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="uk-flex uk-card-body uk-card-hover uk-card-default uk-margin-bottom" *ngIf="isCancelled" style="height: 200px;background-color: rgba(255, 62, 62, 0.171);border:2px dashed rgb(255, 92, 92);">
+    <div class="uk-card uk-card-default">
+        <agm-map [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="17">
+            <agm-marker 
+            *ngFor="let marker of location.markers"
+            [latitude]="marker.lat" 
+            [longitude]="marker.lng">
+            </agm-marker>
+        </agm-map>
+    </div>
+    <div class="uk-card uk-card-body uk-margin-auto">
+        <Address style="text-decoration: line-through;">
+            <i class="fi fi-map" style="color: rgb(255, 0, 106);"></i>&nbsp;&nbsp;{{address}}
+        </Address>
+        <div class="uk-margin" style="text-decoration: line-through;">
+            Total Cost <strong style="color: rgb(49, 179, 49);">{{price}}</strong>&nbsp;|&nbsp;
+            Ordered By <i style="color: cornflowerblue;">{{personName}}</i>
+        </div>
+        <div class="uk-margin" style="text-decoration: line-through;">
+            Delivered By <i style="color: cornflowerblue;">{{personName}}</i>
+        </div>
+        <div class="uk-margin">
+            Reason: {{reason}}
+        </div>
+    </div>
+    <div style="overflow-y: auto;" class="uk-card uk-card-body uk-card-default uk-margin-auto">
+        <table class="uk-table uk-table-hover uk-table-striped">
+            <tr>
+                <th><strong> Product Name </strong></th>
+                <th><strong> Product Quantity </strong></th>
+                <th><strong> Product Price </strong></th>
+            </tr>
+            <tr *ngFor="let product of products">
+                <td>
+                    {{product.name}}
+                </td>
+                <td>
+                    {{product.quantity}}
+                </td>
+                <td>
+                    <div *ngIf="product.isregular">{{product.regPrice}}</div>
+                    <div *ngIf="!product.isregular">{{product.lgPrice}}</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

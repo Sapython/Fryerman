@@ -1,0 +1,45 @@
+<div class="uk-card uk-card-default uk-card-hover uk-flex uk-flex-inline uk-width-1-1 margined uk-margin-auto" *ngIf="rspv">
+    <div class="imageHolder">
+        <img src="{{items[0].image}}" class="imageHolder" alt="{{items[0].name}}" >
+    </div>
+    <div class="uk-card uk-margin-auto itemsContainer" >
+        <div class="items" style="width: 300px;margin-top: 20px;">
+            <ul style="list-style: none;">
+                <div *ngFor="let item of items">
+                    <li class="itemText">{{item.quantity}}&nbsp;&nbsp;&nbsp;{{item.name}}</li>
+                </div>
+            </ul>
+        </div>
+    </div>
+    <div style="display: block;" class="uk-margin-auto">
+        <p class="price">&#8377;{{totalPrice}}</p>
+    </div>
+    <div style="display: block;" class="uk-margin-auto" *ngIf="isCancelled">
+        <p class="price" style="color: crimson;">Cancelled</p>
+        <p>Cancel Reason: {{reason}}</p>
+    </div>
+    <div style="display: block;" class="uk-margin-auto" *ngIf="!isCancelled">
+        <p class="price" style="color:rgb(93, 190, 255);">Completed</p>
+    </div>
+    <button class="uk-button orderButton">
+        <p class="reorder" (click)="reorder()">Reorder</p>
+    </button>
+</div>
+<div class="uk-card uk-card-default uk-card-hover uk-flex-column margined uk-width-1-1" style="height: 500px;" *ngIf="!rspv">
+    <img src="{{items[0].image}}" style="height: auto;width: 100%;border-radius: 20px;" alt="{{items[0].name}}" >
+    <div class="uk-card uk-width-1-1" >
+        <ul style="list-style: none;">
+            <li *ngFor="let item of items" class="itemText">{{item.quantity}}&nbsp;&nbsp;&nbsp;{{item.name}}</li>
+            <li><p style="color: cornflowerblue;font-size: 15px;">Total price &#8377;{{totalPrice}}</p></li>
+        </ul>
+    </div>
+    <div style="display: block;" class="uk-width-1-1" *ngIf="isCancelled">
+        <p style="color: crimson;">Cancelled {{reason}}</p>
+    </div>
+    <div style="display: block;" class="uk-width-1-1" *ngIf="!isCancelled">
+        <p style="color:rgb(93, 190, 255);">Completed</p>
+    </div>
+    <button class="uk-button uk-width-1-1" style="background-color: rgb(182, 35, 35);border-radius: 30px;">
+        <p (click)="reorder()" style="color: white;">Reorder</p>
+    </button>
+</div>

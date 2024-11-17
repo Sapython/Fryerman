@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Checkout</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/css/uikit.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontisto@v3.0.4/css/fontisto/fontisto.min.css" />
+  <!-- UIkit JS -->
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/js/uikit-icons.min.js"></script>
+</head>
+
+<body id="main">
+  <nav style="margin-top: 10px;">
+    <ul style="text-align: center;justify-content: center;">
+      <a href=""><img class="logo" src="assets/fryerman-logo-f.png"></a>
+      <div>
+        <li id="navBar navChild"><a href="javascript:void(0)" id="navBar" onclick="openNav()"><i class="fi fi-nav-icon-a"
+              style="color: #313137;margin-top: -6px;"></i>&nbsp;</a></li>
+        <li class="navChild"><a href="/help">&nbsp;Help</a></li>
+        <li class="navChild"><a href="/orders">&nbsp;Orders</a></li>
+        <li class="navChild"><a href="/">&nbsp;Home</a></li>
+        <div *ngIf="isJustLoggedIn">
+          <li class="navChild">
+              <app-profile [name]="name" [image]="image">
+              </app-profile>
+            </li>
+        </div>
+      </div>
+    </ul>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="/">About</a>
+      <hr>
+      <a href="/help">Help</a>
+      <hr>
+      <div *ngIf="isJustLoggedIn">
+        <a href="/orders">Orders</a>
+        <hr>
+        <a href="/login" (click)="authService.SignOut()">Sign Out</a>
+      </div>
+      <div *ngIf="!isJustLoggedIn">
+        <hr>
+        <a href="/login" (click)="authService.SignOut()">Log in</a>
+      </div>
+      <br>
+      <hr class="uk-hr">
+    </div>
+  </nav>
+  <a href="#mainCard" uk-scroll>
+    <button class="uk-button uk-button-danger uk-align-center" style="width:70vw;border-radius:50px;margin-top:-40px;">
+      <i class="fi fi-credit-card" style="color: white;"> 
+        Pay Now 
+      </i>
+    </button>
+  </a>
+  <div class="uk-card uk-card-body uk-card-default uk-card-hover reciept">
+    <table style="width: 100%;">
+      <tr>
+        <th>Items</th>
+        <th>Quantity</th>
+        <th>Type</th>
+        <th>Price</th>
+      </tr>
+      <tr *ngFor="let product of cartProducts">
+        <td class="uk-text-center">{{product.name}}&nbsp;</td>
+        <td class="uk-text-center">{{product.quantity}}&nbsp;</td>
+        <td>
+          <div class="uk-text-center" *ngIf="product.isregular=='true'">Regular</div>
+          <div class="uk-text-center" *ngIf="product.isregular!='true'">Large</div>
+        </td>
+        <td class="uk-text-center">
+          <div *ngIf="product.isregular=='true'">{{product.regPrice}}</div>
+          <div *ngIf="product.isregular!='true'">{{product.lgPrice}}</div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <hr>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4" style="padding: 10px 20px;background-color: rgba(155, 155, 155,0.2);text-align: center;width:100%;">
+          <div style="font-size: large;">
+            Total Items <b style="color: rgb(119, 155, 255);">{{totalItems}}</b>
+          </div>
+          <div style="font-size: large;">
+            Total SGST:&nbsp;&nbsp;{{sgst}} <br>
+            Total GST:&nbsp;&nbsp;&nbsp;{{gst}} <br>
+            Total Cost:&nbsp;&nbsp;<strong [textContent]="'&#8377;'+calcPrice" style="color: rgb(38, 172, 38);">
+            </strong><br>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="uk-padding" id="mainCard">
+    <div class="uk-card uk-card-body uk-card-default uk-card-hover uk-width-1-1" style="border:2px solid rgb(179, 179, 179);border-radius:10px;" id="form">
+      <form id="contactInfo">
+        <fieldset class="uk-fieldset">
+          <legend class="uk-legend">Payment Information</legend>
+          <div class="uk-margin">
+            <input class="uk-input formInput" id="fullname" type="text" placeholder="Full Name" required  minlength="4">
+          </div>
+          <div class="uk-margin">
+            <input class="uk-input formInput" id="phoneNumber" type="text" placeholder="Phone Number" required  minlength="4">
+          </div>
+          <div class="uk-margin">
+            <input class="uk-input formInput" id="streetAddress" type="text" placeholder="Street Address" required  minlength="4">
+          </div>
+          <div class="uk-margin">
+            <input class="uk-input formInput" id="landmark" type="text" placeholder="Landmark" required app minlength="4">
+          </div>
+          <div>
+            <button class="uk-button uk-button-secondary buttonOrderRed" type="button" id="checkout-button" (click)="continuePayment()">Continue</button>
+          </div>
+          <div id="card-errors" role="alert"></div>
+          <legend>Please wait after pressing checkout it may take some time to load payment gateway.</legend>
+        </fieldset>
+
+      </form>
+    </div>
+  </div>
+  <div class="footer">
+    <div style="float: left;">
+      <div class="uk-flex">
+        <div>
+          <a href="/help">
+            <img src="assets/fryerman-logo-f.png" alt="" style="margin-top: 80px;margin-left: 30px;">
+            <h3 style="margin-top: 20px; margin-left: 65px;">Contact Us</h3>
+          </a>
+          <br>
+        </div>
+        <div class="legals">
+          <a href="/terms" style="color: white;text-decoration: none;font-size: large;">Terms And Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="/privacy" style="color: white;text-decoration: none;font-size: large;">Privacy Policy</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="/disclaimer" style="color: white;text-decoration: none;font-size: large;">Disclaimer</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="/help" style="color: white;text-decoration: none;font-size: large;">Help</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+    <div style="float: right;margin-right: 65px;margin-top: 170px;padding:30px 30px;" class="uk-grid-row-medium" >
+      <li style="font-size: x-large;" class="fi fi-twitter"></li>
+      <li style="font-size: x-large;" class="fi fi-facebook"></li>
+      <li style="font-size: x-large;" class="fi fi-whatsapp"></li>
+    </div>
+  </div>
+  <div class="deepFooter" style="margin: 0px 0px;  position: absolute;color: white; width: 100vw;text-align: center;overflow-x: hidden;;" >
+    <div style="background-color: #811919;margin: 0px 0px;text-align: center;">
+      All rights reserved. Copyright &#169; | NISHKARSH FOODS AND NOURISHMENTS PVT.LTD
+    </div>
+    <div style="width:100vw;margin:0px 0px;background-color: rgb(29, 29, 29); padding: 10px 10px;">Developed By <br><br>&nbsp;&nbsp;&nbsp;<a href="https://swayambhu.tech"><img src="https://swayambhu.tech/assets/img/INNOVATIONS 180.png?h=5711e5e479de8a4d97718000ba5149a8" width="25" height="25" alt="Swayambhu"> Swayambhu </a> with &nbsp;&nbsp;&nbsp;<a href="https://sapython.me/"><img src="https://sapython.me/favicon.ico" height="25" width="25" alt="Sapython"> Kumar Saptam</a></div>
+  </div>
+  <div id="overlay" style="position: absolute;top:0;left:0;width: 100vw;height: 100vh;overflow: hidden;background-color: rgba(255, 155, 155, 0.486);z-index: 10000;" class="hidden">
+    <div style="top:50%;left:50%;transform: translate(-50%,-50%);width: 100px;height: 100px;position: relative;">
+      <i class="fi fi-spinner-cog fi-spin" style="color: #e62828;font-size:40px;"></i>
+    </div>
+  </div>
+</body>
+</html>

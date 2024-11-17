@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Fryer Man</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/css/uikit.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontisto@v3.0.4/css/fontisto/fontisto.min.css" />
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/js/uikit-icons.min.js"></script>
+  </head>
+  <body id="main">
+    <div *ngIf="isJustLoggedIn" style="position: fixed;z-index: 20;bottom: 0px;">
+      <div *ngIf="!isLoggedIn">
+        <div style="width: 100vw;height: 60px;background-color: rgb(255, 255, 255);z-index:20;box-shadow: 10px 0px 90px rgb(202, 202, 202);">
+          <p style="position: relative;color:rgb(53, 53, 53);text-align: center;">
+            Please verify your email. If already did please 
+            <a href="" style="color: rgb(255, 92, 92);">refresh</a> the page or <a (click)="authService.SendVerificationMail()">resend</a> email.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <nav style="margin-top: 10px;">
+        <ul style="text-align: center;justify-content: center;">
+          <a href=""><img class="logo" src="assets/fryerman-logo-f.png"></a>
+          <div>
+            <li id="navBar navChild"><a href="javascript:void(0)" id="navBar" onclick="openNav()"><i class="fi fi-nav-icon-a"
+                  style="color: #313137;margin-top: -6px;"></i>&nbsp;</a></li>
+            <li class="navChild"><a href="/help">&nbsp;Help</a></li>
+            <li class="navChild"><a href="/orders">&nbsp;Orders</a></li>
+            <li class="navChild"><a href="/">&nbsp;Home</a></li>
+            <div *ngIf="isJustLoggedIn">
+              <li class="navChild">
+                  <app-profile [name]="name" [image]="image">
+                  </app-profile>
+                </li>
+            </div>
+          </div>
+        </ul>
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <a href="/">About</a>
+          <hr>
+          <a href="/help">Help</a>
+          <hr>
+          <div *ngIf="isJustLoggedIn">
+            <a href="/orders">Orders</a>
+            <hr>
+            <a href="/login" (click)="authService.SignOut()">Sign Out</a>
+          </div>
+          <div *ngIf="!isJustLoggedIn">
+            <hr>
+            <a href="/login" (click)="authService.SignOut()">Log in</a>
+          </div>
+          <br>
+          <hr class="uk-hr">
+        </div>
+      </nav>
+      <h1 class="uk-text-center" style="margin-top: -40px;">Your Cart</h1>
+      <div class="smallCart uk-card uk-card-body">
+        <div class="smallCartIfContainer" *ngIf="productsAvailable">
+          <div *ngFor="let cartProduct of cartProducts">
+            <div class="uk-card uk-card-default" style="padding: 10px 10px;border: #b8b8b8 2px solid;border-radius:10px;" id="{{cartProduct.name}}">
+              <button style="border: none;margin: 0px;background-color: transparent;" (click)="removeItem(cartProduct.name)"
+                uk-close></button>
+              <div class="uk-flex">
+                <img src="{{cartProduct.image}}" style="border-radius: 20px;" height="100" width="100"
+                  alt="{{cartProduct.name}}">
+                <h4 style="color: #313137;margin: 10px 10px;">{{cartProduct.name}}</h4>
+                <h5>{{cartProduct.regPrice}}/{{cartProduct.lgPrice}}</h5>
+              </div>
+              <div class="uk-flex uk-margin">
+                <div style="width:50%;">
+                  <input type="number" id="{{cartProduct.name}}quantity" min="1" max="100" name="{{cartProduct.name}}quantity" (change)="setNewQuantity(cartProduct.name)" value="{{cartProduct.quantity}}" class="uk-input">
+                </div>
+                <div style="width:50%;" *ngIf="cartProduct.hasDifferentSize">
+                  <select name="type" class="uk-select" [value]="cartProduct.isregular" id="{{cartProduct.name}}select" (change)="sizeChanged(cartProduct.name)">
+                    <option value="true" selected>Regular</option>
+                    <option value="false">Large</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="noProductContainer uk-card-default" style="border:4px solid rgb(192, 192, 192);border-top-left-radius:10px;border-top-right-radius:10px;" *ngIf="!productsAvailable">
+          <i class="fi fi-opencart" style="font-size: 60px;margin-top: 20px;"></i>
+          <p class="uk-text-center">The cart is empty please add some products</p>
+        </div>
+        <button class="uk-button uk-button-secondary uk-text-center uk-width-1-1" *ngIf="productsAvailable">
+            <a (click)="moveToCheckout()" style="text-decoration: none;color: aliceblue;">Move to Checkout</a>
+        </button>
+        <a href="./" style="text-decoration: none;color: aliceblue;"><button class="uk-button uk-button-secondary uk-text-center uk-width-1-1" *ngIf="!productsAvailable">
+          Move to Home
+        </button></a>
+      </div>
+      <div class="footer">
+        <div style="float: left;">
+          <div class="uk-flex">
+            <div>
+              <a href="/help">
+                <img src="assets/fryerman-logo-f.png" alt="" style="margin-top: 80px;margin-left: 30px;">
+                <h3 style="margin-top: 20px; margin-left: 65px;">Contact Us</h3>
+              </a>
+              <br>
+            </div>
+            <div class="legals">
+              <a href="/terms" style="color: white;text-decoration: none;font-size: large;">Terms And Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="/privacy" style="color: white;text-decoration: none;font-size: large;">Privacy Policy</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="/disclaimer" style="color: white;text-decoration: none;font-size: large;">Disclaimer</a>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a href="/help" style="color: white;text-decoration: none;font-size: large;">Help</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+          </div>
+        </div>
+        <div style="float: right;margin-right: 65px;margin-top: 170px;padding:30px 30px;" class="uk-grid-row-medium" >
+          <li style="font-size: x-large;" class="fi fi-twitter"></li>
+          <li style="font-size: x-large;" class="fi fi-facebook"></li>
+          <li style="font-size: x-large;" class="fi fi-whatsapp"></li>
+        </div>
+      </div>
+    </div>
+    <div class="deepFooter" style="margin: 0px 0px;  position: absolute;color: white; width: 100vw;text-align: center;overflow-x: hidden;;" >
+      <div style="background-color: #811919;margin: 0px 0px;text-align: center;">
+        All rights reserved. Copyright &#169; | NISHKARSH FOODS AND NOURISHMENTS PVT.LTD
+      </div>
+      <div style="width:100vw;margin:0px 0px;background-color: rgb(29, 29, 29); padding: 10px 10px;">Developed By <br>&nbsp;&nbsp;&nbsp;<a href="https://swayambhu.tech"><img src="https://swayambhu.tech/assets/img/INNOVATIONS 180.png?h=5711e5e479de8a4d97718000ba5149a8" width="25" height="25" alt="Swayambhu"> Swayambhu </a> with &nbsp;&nbsp;&nbsp;<a href="https://sapython.me/"><img src="https://sapython.me/favicon.ico" height="25" width="25" alt="Sapython"> Kumar Saptam</a></div>
+    </div>
+  </body>
+</html>
+
+

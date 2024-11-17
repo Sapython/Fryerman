@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/css/uikit.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontisto@v3.0.4/css/fontisto/fontisto.min.css" />
+        <!-- UIkit JS -->
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/js/uikit.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/uikit@3.6.18/dist/js/uikit-icons.min.js"></script>
+    </head>
+    <body>
+        <div class="overlay">
+            <img src="/assets/fryerman-logo-f.png" alt="Fryer Man" class="logo">
+            <div class="formWidget">
+                <h1 class="uk-text-center">Log In</h1>
+                <div class="form">
+                    <form>
+                        <div class="uk-margin">
+                            <input class="uk-input" type="email" placeholder="Email" #email required>
+                        </div>
+                        <div style="height: 30px;"></div>
+                        <div class="uk-margin">
+                            <input class="uk-input" type="password" placeholder="Password" #password required>
+                        </div>
+                        <label class="uk-text-center">Not a member. No problem <a href="/register">register now</a></label>
+                        <div class="uk-margin">
+                            <button type="submit" (click)="authService.SignIn(email.value,password.value)">Submit</button>
+                        </div>
+                    </form>
+                    <div class="orText uk-text-center">or you can login with</div>
+                    <div class="uk-flex uk-flex-around socials">
+                        <div class="social">
+                            <img src="assets/google.png" alt="Sign In with Google" (click)="authService.GoogleAuth()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
